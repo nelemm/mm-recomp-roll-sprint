@@ -1,0 +1,97 @@
+# Config file for an example Majora's Mask: Recompiled mod.
+
+# Fields that end up in the mod's manifest.
+[manifest]
+
+# Unique ID of this mod. Pick something long enough that it'll never be the same as any other mod.
+# The name displayed in the mod management menu is separate from this so this doesn't need to be human readable.
+id = "nelem_mm_roll_sprint"
+
+# Version of this mod.
+version = "1.1.1"
+
+# The name that will show up for this mod in the mod menu. This should be human readable.
+display_name = "Roll Sprint"
+
+# The description that will show up when this mod is displayed in the mod menu. This should be human readable.
+description = """
+AprÃƒÂ¨s une roulade, garde A enfoncÃƒÂ© pour que Link continue en courant ÃƒÂ  la vitesse de la roulade.
+RelÃƒÂ¢che A (ou arrÃƒÂªte-toi) pour revenir ÃƒÂ  la vitesse normale.
+
+Fonctionne pour toutes les formes qui roulent comme Link (humain, Zora, Fierce Deity).
+N'agit que sur la course normale : pas sur la visÃƒÂ©e Z, la nage, l'escalade, ni les formes Goron et Mojo.
+Compatible avec Roll Master et Enhanced Roll (aucun patch, uniquement des hooks)."""
+
+# A short description that will show up in this mod's entry in the mod list.
+short_description = "Roulade puis A maintenu : garde la vitesse de la roulade."
+
+# Authors of this mod.
+authors = [ "Nelem" ]
+
+# ID of the target recomp game.
+game_id = "mm"
+
+# Minimum version of the target recomp (e.g. Zelda 64: Recompiled) that this mod can run on.
+minimum_recomp_version = "1.2.2"
+
+# Dependency mods. Each entry is the mod's ID and then an optional minimum version of the dependency mod.
+dependencies = [
+]
+
+# Optional dependency mods.
+optional_dependencies = [
+]
+
+# Native libraries (e.g. DLLs) and the functions they export.
+native_libraries = [
+]
+
+# Inputs to the mod tool.
+[inputs]
+
+# Input elf file to generate a mod from.
+elf_path = "build/mod.elf"
+
+# Output mod filename.
+mod_filename = "nelem_mm_roll_sprint"
+
+# Reference symbol files.
+func_reference_syms_file = "Zelda64RecompSyms/mm.us.rev1.syms.toml"
+data_reference_syms_files = [ "Zelda64RecompSyms/mm.us.rev1.datasyms.toml", "Zelda64RecompSyms/mm.us.rev1.datasyms_static.toml" ]
+
+# Additional files to include in the mod.
+additional_files = [ ]
+
+[[manifest.config_options]]
+id = "enabled"
+name = "Sprint apres roulade"
+description = "Active ou desactive le sprint : roulade, puis A maintenu pour garder la vitesse."
+type = "Enum"
+options = [ "Active", "Desactive" ]
+default = "Active"
+
+[[manifest.config_options]]
+id = "speed"
+name = "Vitesse du sprint"
+description = """Multiplicateur de la vitesse de course pendant le sprint.
+1.5 = exactement la vitesse de la roulade (comme dans le jeu de base).
+1.0 = aucun effet. Au-dessus de 1.5, plus rapide que la roulade."""
+type = "Number"
+min = 1.0
+max = 2.5
+step = 0.05
+precision = 2
+default = 1.5
+
+[[manifest.config_options]]
+id = "turning"
+name = "Virages"
+description = """Vitesse Ã  laquelle Link change de direction en courant.
+
+Classiques : comme le jeu d'origine (rotation progressive, freinage avant un demi-tour).
+Rapides (sprint) : pivot rapide seulement pendant le sprint.
+Rapides (toujours) : pivot rapide en course et en sprint, comme dans les jeux rÃ©cents.
+Instantanes : Link part directement dans la direction du stick."""
+type = "Enum"
+options = [ "Classiques", "Rapides (sprint)", "Rapides (toujours)", "Instantanes" ]
+default = "Rapides (toujours)"
